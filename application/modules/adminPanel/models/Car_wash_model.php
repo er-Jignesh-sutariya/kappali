@@ -6,9 +6,9 @@
 class Car_wash_model extends Admin_model
 {
     public $table = "car_washes c";
-    public $select_column = ['c.id', 'c.vehicle_no', 'c.payment_id', 'c.status', 'c.vehicle_company', 'c.vehicle_model', 'c.wash_date', 'c.wash_time', 'c.discount', "CONCAT(u.app_no, ', ', u.society, ', ', u.nearby, ', ', a.area) AS address", "c.user_id"];
+    public $select_column = ['c.id', 'c.vehicle_no', 'c.payment_id', 'c.status', 'c.vehicle_company', 'c.vehicle_model', 'c.wash_date', 'c.wash_time', 'c.discount', "CONCAT(u.app_no, ', ', u.society, ', ', u.nearby, ', ', a.area) AS address", "c.user_id", "c.created_at"];
     public $search_column = ['c.id', 'c.vehicle_no', 'c.payment_id', 'c.status', 'c.vehicle_company', 'c.vehicle_model', 'c.wash_date', 'c.wash_time', 'c.discount'];
-    public $order_column = [null, 'c.vehicle_no', 'c.payment_id', 'c.vehicle_company', 'c.vehicle_model', 'c.wash_date', 'c.wash_time', 'c.discount', 'c.status', null];
+    public $order_column = [null, 'c.vehicle_no', 'c.payment_id', 'c.vehicle_company', 'c.vehicle_model', "c.created_at", "c.created_at", 'c.discount', 'c.status', null];
     public $order = ['c.id' => 'DESC'];
 
     public function make_query()  

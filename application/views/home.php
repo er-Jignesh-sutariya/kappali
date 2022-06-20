@@ -31,7 +31,7 @@
 	</div>
 </div>
 <div class="container">
-	<marquee><p>Note - This service is available only in Ahmedabad.</p></marquee>
+	<marquee><p>Note - This service is available only in Ahmedabad. Temporary scrap service is barred or unavailable.</p></marquee>
 	<div class="ct-us-web">
 		<a href="tel:8866679667" class="text-white">Contact us - 88666 79667</a>
 	</div>
@@ -65,7 +65,7 @@
 			<div class="products">
 				<div class="product">
 					<div class="custom-control custom-checkbox image-checkbox">
-						<input type="checkbox" class="custom-control-input" id="ck1a" name="product[]" value="newspaper">
+						<input type="checkbox" class="custom-control-input" id="ck1a" name="product[]" value="newspaper" disabled>
 						<label class="custom-control-label" for="ck1a">
 							<div class="prod-img text-center">
 								<img src="<?= base_url('assets/images/newspaper-wh.png') ?>" alt="newspaper">
@@ -79,7 +79,7 @@
 				</div>
 				<div class="product">
 					<div class="custom-control custom-checkbox image-checkbox">
-						<input type="checkbox" class="custom-control-input" id="ck1b" name="product[]" value="plastic">
+						<input type="checkbox" class="custom-control-input" id="ck1b" name="product[]" value="plastic" disabled>
 						<label class="custom-control-label" for="ck1b">
 							<img src="<?= base_url('assets/images/plastic-wh.png') ?>" alt="plastic">
 						</label>
@@ -91,7 +91,7 @@
 				</div>
 				<div class="product">
 					<div class="custom-control custom-checkbox image-checkbox">
-						<input type="checkbox" class="custom-control-input" id="ck1c" name="product[]" value="metal">
+						<input type="checkbox" class="custom-control-input" id="ck1c" name="product[]" value="metal" disabled>
 						<label class="custom-control-label" for="ck1c">
 							<img src="<?= base_url('assets/images/scrap-wh.png') ?>" alt="metal">
 						</label>
@@ -103,7 +103,7 @@
 				</div>
 				<div class="product">
 					<div class="custom-control custom-checkbox image-checkbox">
-						<input type="checkbox" class="custom-control-input" id="ck1d" name="product[]" value="e-waste">
+						<input type="checkbox" class="custom-control-input" id="ck1d" name="product[]" value="e-waste" disabled>
 						<label class="custom-control-label" for="ck1d">
 							<img src="<?= base_url('assets/images/electronic-wh.png') ?>" alt="e-waste">
 						</label>
@@ -115,7 +115,7 @@
 				</div>
 				<div class="product">
 					<div class="custom-control custom-checkbox image-checkbox">
-						<input type="checkbox" class="custom-control-input" id="ck1e" name="product[]" value="other">
+						<input type="checkbox" class="custom-control-input" id="ck1e" name="product[]" value="other" disabled>
 						<label class="custom-control-label" for="ck1e">
 							<img src="<?= base_url('assets/images/electronics-wh.png') ?>" alt="other items">
 						</label>
@@ -127,7 +127,7 @@
 				</div>
 			</div>
 		</div><br>
-		<button class="btn btn-success continue-btn" type="button" onclick="saveProds()">Continue</button>
+		<button class="btn btn-success continue-btn" type="button" disabled onclick="saveProds()">Continue</button>
 		<div class="selling-note mt-5">
 			<p>Note - We don't buy wood, cloth and glass.</p>
 		</div>

@@ -164,36 +164,58 @@ class Home extends Public_controller  {
 				$this->session->set_flashdata('error', "Invalid coupon code.");
 				return redirect('rate-list');
 			}
-			
-			ksort($postData);
-			$signatureData = "";
-			foreach ($postData as $key => $value){
-				$signatureData .= $key.$value;
-			}
-			$signature = hash_hmac('sha256', $signatureData, SEC_KEY, true);
 
-			if (PAY_MODE == "PROD") {
-				$url = "https://www.cashfree.com/checkout/post/submit";
-			} else {
-				$url = "https://test.cashfree.com/billpay/checkout/post/submit";
-			}
-			
-			$postData['signature'] = base64_encode($signature);
-			$postData['url'] = $url;
-			$temp = [
-				'user_id' => $this->session->user_id,
-				'orderId' => $postData['orderId'],
-				'washes' => json_encode($sess),
-				'discount' => isset($discount) ? $discount : 0
-			];
-			
-			$check = $this->main->add($temp, 'temp_orders');
+			$balance = $this->main->check('users', ['id' => $this->user_id], 'balance');
 
-			if ($check) {
-				$this->load->view('cashfree', $postData);
+			if($postData['orderAmount'] - $balance <= 0){
+				$user = $this->main->get('users', 'id user_id, fname, lname, phone, balance, app_no, society, nearby, area, vehicle_no, vehicle_company, vehicle_model, wash_date, wash_time', ['id' => $this->user_id]);
+				$user['washes'] = json_encode($sess);
+				
+				$wallet['balance'] = $postData['orderAmount'] - $d['balance'];
+				
+				$user['discount'] = isset($discount) ? $discount + $postData['orderAmount'] : $postData['orderAmount'];
+
+				if ($this->main->addOrder($user, $wallet)) {
+					$this->session->set_flashdata('success', "Your order recieved succesfully.");
+					return redirect('');
+				}else{
+					$this->session->set_flashdata('error', "Some error occured.");
+					return redirect('rate-list');
+				}
 			}else{
-				$this->session->set_flashdata('error', "Some error occured.");
-				return redirect('rate-list');
+				$postData['orderAmount'] = $postData['orderAmount'] - $balance;
+				$discount = isset($discount) ? $discount + $balance : $balance;
+
+				ksort($postData);
+				$signatureData = "";
+				foreach ($postData as $key => $value){
+					$signatureData .= $key.$value;
+				}
+				$signature = hash_hmac('sha256', $signatureData, SEC_KEY, true);
+
+				if (PAY_MODE == "PROD") {
+					$url = "https://www.cashfree.com/checkout/post/submit";
+				} else {
+					$url = "https://test.cashfree.com/billpay/checkout/post/submit";
+				}
+				
+				$postData['signature'] = base64_encode($signature);
+				$postData['url'] = $url;
+				$temp = [
+					'user_id' => $this->session->user_id,
+					'orderId' => $postData['orderId'],
+					'washes' => json_encode($sess),
+					'discount' => isset($discount) ? $discount : 0
+				];
+				
+				$check = $this->main->add($temp, 'temp_orders');
+
+				if ($check) {
+					return $this->load->view('cashfree', $postData);
+				}else{
+					$this->session->set_flashdata('error', "Some error occured.");
+					return redirect('rate-list');
+				}
 			}
 		}
 	}

@@ -37,12 +37,13 @@ class Questions extends CI_controller
 				'wash_date'       => $data['wash_date'],
 				'wash_time'       => $data['wash_time'],
 				'washes'          => $order['washes'],
+				'created_at'      => time(),
 				'discount'		  => $order['discount']
 			];
             $this->session->set_userdata($data);
 			if ($this->main->add($post, 'car_washes')):
-				// send_sms($data['phone'], "Dear customer, your payment of car wash is successfully received by 'KAPPALI', thanks for choosing Kappali Eco Friendly Services :8866679667", '1307164950811851609');
-				send_sms($data['phone'], "Dear customer, your payment of car wash is successfully received by 'KAPPALI', Services will be provide as per scheduled on dated ".date('d-m-Y', strtotime($data['wash_date']))." More info : 8866679667", '1307165443180013568');
+				send_sms(8866679667, "ORDER ALERT : THIS CAR NUMBER ".$data['vehicle_no']." PAYMENT IS DONE BY 'KAPPALI'	", '1307165537665948387');
+				send_sms($data['phone'], "Dear customer, your payment of car wash is successfully received by 'KAPPALI', Services will be provide as per scheduled on dated ".date('d-m-Y', strtotime($data['wash_date']))." - ".$data['wash_time']." More info : 8866679667", '1307165443180013568');
 				$this->main->update(['orderId' => $order['orderId']], ['status' => 'Completed'], 'temp_orders');
 				$this->session->set_flashdata('success', "Your payment recieved succesfully.");
 				return redirect('');

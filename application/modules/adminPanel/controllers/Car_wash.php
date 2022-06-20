@@ -32,8 +32,8 @@ class Car_wash extends Admin_controller {
             $sub_array[] = $row->payment_id;
             $sub_array[] = $row->vehicle_company;
             $sub_array[] = $row->vehicle_model;
-            $sub_array[] = $row->wash_date;
-            $sub_array[] = $row->wash_time;
+            $sub_array[] = date("d-m-Y", $row->created_at);
+            $sub_array[] = date("h:i A", $row->created_at);
             $sub_array[] = $row->discount;
             $sub_array[] = $row->address;
             

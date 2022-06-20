@@ -82,7 +82,7 @@ class Users extends Admin_controller {
             $bal =  ($this->input->post('interior') ? $this->input->post('interior') : 0) + ($this->input->post('exterior') ? $this->input->post('exterior') : 0);
             /* $sms = $this->config->item('balance_add')['sms'];
             $sms = str_replace('{#var#}', $bal, $sms);
-            send_sms(9974092050, $sms, $this->config->item('balance_add')['temp']); */
+            send_sms(9408016008, $sms, $this->config->item('balance_add')['temp']); */
             
             $post = [
                         'balance' => $this->input->post('balance') + $bal
