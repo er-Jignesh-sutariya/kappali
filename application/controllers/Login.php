@@ -117,7 +117,7 @@ class Login extends CI_controller  {
                 $sms = str_replace('{var}', $otp['otp'], $sms);
                 send_sms($post['phone'], $sms, $this->config->item('otp_sms')['temp']);
                 $this->session->set_flashdata($post);
-                return redirect('checkOtp');
+                return redirect('login/checkOtp');
             }else{
                 $this->session->set_flashdata('error', 'OTP not send. Try again.');
                 return redirect('registration');
@@ -167,7 +167,9 @@ class Login extends CI_controller  {
                     'nearby'  => $post['nearby'],
                     'area'    => $post['area'],
                 ];
+
                 $user = $this->main->get('users', 'id user_id, fname, lname, phone', ['phone' => $add['phone']]);
+                
                 if (!$user) {
                     $add['user_id'] = $this->main->add($add, 'users');
                     $this->session->set_userdata($add);
@@ -177,7 +179,7 @@ class Login extends CI_controller  {
                 return redirect('');
             }else{
                 $this->session->set_flashdata('error', 'Invalid OTP. Try again.');
-                return redirect('checkOtp');
+                return redirect('login/checkOtp');
             }
         }
     }

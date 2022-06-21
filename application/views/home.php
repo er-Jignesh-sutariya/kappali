@@ -17,7 +17,7 @@
 				<div class="bal-part">
 					<h4><b>Kappali balance</b></h4>
 					<p><?= $this->balance ?></p>
-					<a href="<?= base_url('add-point') ?>"><button class="btn btn-primary"><i class="fas fa-minus-circle"></i>Redeem</button></a>
+					<a href="<?= base_url('car-wash') ?>"><button class="btn btn-primary"><i class="fas fa-minus-circle"></i>Redeem</button></a>
 				</div>
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-6 col-6 text-center">
@@ -45,7 +45,7 @@
 					<div class="bal-part">
 						<h4>Kappali balance</h4>
 						<p><?= $this->balance ?></p>
-						<a href="<?= base_url('add-point') ?>"><button class="btn btn-primary"><i
+						<a href="<?= base_url('car-wash') ?>"><button class="btn btn-primary"><i
 									class="fas fa-minus-circle"></i>Redeem</button></a>
 					</div>
 				</div>

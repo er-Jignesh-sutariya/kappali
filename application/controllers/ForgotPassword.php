@@ -61,6 +61,7 @@ class ForgotPassword extends CI_controller  {
         $post = $this->session->userdata();
 
         if (!$post['otp_id']) return redirect('forgotPassword');
+        
         $validate = [
                         [
                             'field' => 'otp',
