@@ -26,8 +26,10 @@ class Questions extends CI_controller
 			    return redirect('');
             }
             
-            $data = $this->main->get('users', 'id user_id, fname, lname, phone, balance, app_no, society, nearby, area, vehicle_no, vehicle_company, vehicle_model, wash_date, wash_time', ['id' => $order['user_id']]);
+            $data = $this->main->get('users', 'id user_id, fname, lname, phone, (balance - '.$order['balance'].') AS balance, app_no, society, nearby, area, vehicle_no, vehicle_company, vehicle_model, wash_date, wash_time', ['id' => $order['user_id']]);
 			
+			$wallet['balance'] = $data['balance'];
+
 			$post = [
 				'payment_id'      => $this->input->post('orderId'),
 				'user_id'         => $order['user_id'],
@@ -40,9 +42,12 @@ class Questions extends CI_controller
 				'created_at'      => time(),
 				'discount'		  => $order['discount']
 			];
+
             $this->session->set_userdata($data);
-			if ($this->main->add($post, 'car_washes')):
-				send_sms(8866679667, "ORDER ALERT : THIS CAR NUMBER ".$data['vehicle_no']." PAYMENT IS DONE BY 'KAPPALI'	", '1307165537665948387');
+
+			if ($this->main->addOrder($post, $wallet)):
+				send_sms(8866679667, "ORDER ALERT : THIS CAR NUMBER ".$data['vehicle_no']." PAYMENT IS DONE BY 'KAPPALI'", '1307165537665948387');
+				send_sms(8780331624, "ORDER ALERT : THIS CAR NUMBER ".$data['vehicle_no']." PAYMENT IS DONE BY 'KAPPALI'", '1307165537665948387');
 				send_sms($data['phone'], "Dear customer, your payment of car wash is successfully received by 'KAPPALI', Services will be provide as per scheduled on dated ".date('d-m-Y', strtotime($data['wash_date']))." - ".$data['wash_time']." More info : 8866679667", '1307165443180013568');
 				$this->main->update(['orderId' => $order['orderId']], ['status' => 'Completed'], 'temp_orders');
 				$this->session->set_flashdata('success', "Your payment recieved succesfully.");

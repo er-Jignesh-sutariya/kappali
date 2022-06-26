@@ -153,7 +153,7 @@ class Home extends Public_controller  {
 				'notifyUrl' => base_url(),
 			];
 			
-			if ($coupon && $check = $this->main->get('coupons', 'discount', ['c_code' => $coupon])) {
+			if ($coupon && $check = $this->main->get('coupons', 'discount', ['c_code' => $coupon, 'is_deleted' => 0])) {
 				$price = $rate * (100 - $check['discount']) / 100;
 				$discount = $rate * ($check['discount']) / 100;
 				$postData['orderAmount'] = $price;
@@ -175,7 +175,20 @@ class Home extends Public_controller  {
 				
 				$user['discount'] = isset($discount) ? $discount + $postData['orderAmount'] : $postData['orderAmount'];
 
-				if ($this->main->addOrder($user, $wallet)) {
+				$post = [
+					'payment_id'      => "Wallet discount",
+					'user_id'         => $d['user_id'],
+					'vehicle_no'      => $d['vehicle_no'],
+					'vehicle_company' => $d['vehicle_company'],
+					'vehicle_model'   => $d['vehicle_model'],
+					'wash_date'       => $d['wash_date'],
+					'wash_time'       => $d['wash_time'],
+					'washes'          => $d['washes'],
+					'created_at'      => time(),
+					'discount'		  => $d['discount']
+				];
+
+				if ($this->main->addOrder($post, $wallet)) {
 					$this->session->set_flashdata('success', "Your order recieved succesfully.");
 					return redirect('');
 				}else{
@@ -202,9 +215,10 @@ class Home extends Public_controller  {
 				$postData['signature'] = base64_encode($signature);
 				$postData['url'] = $url;
 				$temp = [
-					'user_id' => $this->session->user_id,
-					'orderId' => $postData['orderId'],
-					'washes' => json_encode($sess),
+					'user_id'  => $this->session->user_id,
+					'orderId'  => $postData['orderId'],
+					'washes'   => json_encode($sess),
+					'balance'  => $balance,
 					'discount' => isset($discount) ? $discount : 0
 				];
 				
