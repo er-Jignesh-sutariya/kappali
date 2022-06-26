@@ -12,5 +12,5 @@ $config['car_wash'] = [
 
 $config['balance_add'] = [
     'temp' => '1307165347173133751',
-    'sms'  => "Dear customer, Rs.{#var#} is successfully added in your ‘KAPPALI APP BALANCE’, which you can use for our services. Thanks for choosing Eco Friendly Services 'KAPPALI’: 8866679667."
+    'sms'  => "Dear customer, Rs.{#var#} is successfully added in your 'KAPPALI APP BALANCE', which you can use for our services. Thanks for choosing Eco Friendly Services 'KAPPALI': 8866679667.	"
 ];

@@ -63,6 +63,9 @@ class Users extends Admin_controller {
     public function balance($id)
     {
         $this->form_validation->set_rules($this->validate);
+        
+        $data['data'] = $this->main->get($this->table, 'fname, lname, phone, balance', ['id' => d_id($id)]);
+
         if ($this->form_validation->run() == FALSE)
         {
             $data['id'] = $id;
@@ -70,7 +73,7 @@ class Users extends Admin_controller {
             $data['title'] = $this->title;
             $data['url'] = $this->redirect;
             $data['operation'] = 'balance';
-            $data['data'] = $this->main->get($this->table, 'fname, lname, phone, balance', ['id' => d_id($id)]);
+            
 
             if ($data['data'])
                 return $this->template->load(admin('template'), $this->redirect.'/balance', $data);
@@ -80,9 +83,14 @@ class Users extends Admin_controller {
         else
         { 
             $bal =  ($this->input->post('interior') ? $this->input->post('interior') : 0) + ($this->input->post('exterior') ? $this->input->post('exterior') : 0);
-            /* $sms = $this->config->item('balance_add')['sms'];
-            $sms = str_replace('{#var#}', $bal, $sms);
-            send_sms(9408016008, $sms, $this->config->item('balance_add')['temp']); */
+            
+            if ($data['data'])
+            {
+                $sms = $this->config->item('balance_add')['sms'];
+                $sms = str_replace('{#var#}', $bal, $sms);
+                
+                send_sms($data['data']['phone'], $sms, $this->config->item('balance_add')['temp']);
+            }
             
             $post = [
                         'balance' => $this->input->post('balance') + $bal
