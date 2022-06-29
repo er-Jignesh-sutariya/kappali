@@ -35,6 +35,7 @@ class Car_wash extends Admin_controller {
             $sub_array[] = date("d-m-Y", $row->created_at);
             $sub_array[] = date("h:i A", $row->created_at);
             $sub_array[] = $row->discount;
+            $sub_array[] = $row->c_code ? $row->c_code : "NA";
             $sub_array[] = $row->address;
             
             $sub_array[] = anchor($this->redirect.'/invoice/'.e_id($row->id), '<i class="fa fa-print"></i>',

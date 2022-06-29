@@ -53,7 +53,7 @@
             <td style="border: 1px solid #ccc;"><?= $data['vehicle_model'] ?></td>
             <td style="border: 1px solid #ccc;"><?= $data['payment_id'] ?></td>
             <td style="border: 1px solid #ccc;"><?= $wash->wash ?></td>
-            <td style="border: 1px solid #ccc;"><?= $data['discount'] ?></td>
+            <td style="border: 1px solid #ccc;"><?= $data['discount'] ?> - <?= $data['c_code'] ?></td>
             <td style="border: 1px solid #ccc;"><?= $wash->rate ?></td>
         </tr>
         <?php endforeach ?>

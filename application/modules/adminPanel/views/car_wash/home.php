@@ -21,6 +21,7 @@
 							<th>Date</th>
 							<th>Time</th>
 							<th>Discount</th>
+							<th>Coupon</th>
 							<th class="target">Address</th>
 							<th class="target">Invoice</th>
 							<th class="target">Status</th>

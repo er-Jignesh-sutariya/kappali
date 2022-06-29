@@ -185,7 +185,8 @@ class Home extends Public_controller  {
 					'wash_time'       => $d['wash_time'],
 					'washes'          => $d['washes'],
 					'created_at'      => time(),
-					'discount'		  => $d['discount']
+					'discount'		  => $d['discount'],
+					'c_code'		  => $coupon
 				];
 
 				if ($this->main->addOrder($post, $wallet)) {
@@ -219,7 +220,8 @@ class Home extends Public_controller  {
 					'orderId'  => $postData['orderId'],
 					'washes'   => json_encode($sess),
 					'balance'  => $balance,
-					'discount' => isset($discount) ? $discount : 0
+					'discount' => isset($discount) ? $discount : 0,
+					'c_code'   => $coupon
 				];
 				
 				$check = $this->main->add($temp, 'temp_orders');

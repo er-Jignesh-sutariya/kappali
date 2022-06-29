@@ -41,6 +41,7 @@ class Questions extends CI_controller
 				'wash_date'       => $data['wash_date'],
 				'wash_time'       => $data['wash_time'],
 				'washes'          => $order['washes'],
+				'c_code'          => $order['c_code'],
 				'created_at'      => time(),
 				'discount'		  => $order['discount']
 			];
