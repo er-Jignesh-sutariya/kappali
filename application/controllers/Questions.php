@@ -19,14 +19,16 @@ class Questions extends CI_controller
 
     public function payment_form()
 	{
+		$order = $this->main->get('temp_orders', '*', ['orderId' => $this->input->post('orderId')]);
+		$data = $this->main->get('users', 'id user_id, fname, lname, phone, (balance - '.$order['balance'].') AS balance, app_no, society, nearby, area, vehicle_no, vehicle_company, vehicle_model, wash_date, wash_time', ['id' => $order['user_id']]);
+
+		$this->session->set_userdata($data);
+
         if($this->input->post('txStatus') === 'SUCCESS'):
-            $order = $this->main->get('temp_orders', '*', ['orderId' => $this->input->post('orderId')]);
 			if(!$order) {
                 $this->session->set_flashdata('error', "Some error occurs. Please try again.");
 			    return redirect('');
             }
-            
-            $data = $this->main->get('users', 'id user_id, fname, lname, phone, (balance - '.$order['balance'].') AS balance, app_no, society, nearby, area, vehicle_no, vehicle_company, vehicle_model, wash_date, wash_time', ['id' => $order['user_id']]);
 			
 			$wallet['balance'] = $data['balance'];
 
@@ -42,8 +44,6 @@ class Questions extends CI_controller
 				'created_at'      => time(),
 				'discount'		  => $order['discount']
 			];
-
-            $this->session->set_userdata($data);
 
 			if ($this->main->addOrder($post, $wallet)):
 				send_sms(8866679667, "ORDER ALERT : THIS CAR NUMBER ".$data['vehicle_no']." PAYMENT IS DONE BY 'KAPPALI'", '1307165537665948387');
